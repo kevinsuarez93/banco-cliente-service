@@ -2,7 +2,7 @@ package ec.com.banco.cliente.infrastructure.ejemplo.mappers;
 
 import org.mapstruct.Mapper;
 
-import ec.com.banco.cliente.domain.producto.Categoria;
+import ec.com.banco.cliente.domain.ejemplo.producto.Categoria;
 import ec.com.banco.cliente.infrastructure.ejemplo.entities.CategoriaEntity;
 
 @Mapper(componentModel = "spring")

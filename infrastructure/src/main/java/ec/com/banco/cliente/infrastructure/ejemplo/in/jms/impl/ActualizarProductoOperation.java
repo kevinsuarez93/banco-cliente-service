@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ec.com.banco.cliente.infrastructure.common.jms.Servicio;
 import ec.com.banco.cliente.infrastructure.ejemplo.mappers.ProductoMapper;
-import ec.com.banco.cliente.share.producto.ProductoDto;
+import ec.com.banco.cliente.share.ejemplo.dto.ProductoDto;
 import jakarta.jms.JMSException;
 import jakarta.jms.TextMessage;
 

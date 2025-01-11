@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ec.com.banco.cliente.domain.common.exception.EntidadNoEncontradaException;
-import ec.com.banco.cliente.domain.producto.ProductoService;
+import ec.com.banco.cliente.domain.ejemplo.producto.ProductoService;
 import ec.com.banco.cliente.infrastructure.common.exceptions.RemoteExecutionException;
 import ec.com.banco.cliente.infrastructure.ejemplo.mappers.ProductoMapper;
-import ec.com.banco.cliente.share.producto.ProductoDto;
+import ec.com.banco.cliente.share.ejemplo.dto.ProductoDto;
 import jakarta.jms.JMSException;
 
 @RestController

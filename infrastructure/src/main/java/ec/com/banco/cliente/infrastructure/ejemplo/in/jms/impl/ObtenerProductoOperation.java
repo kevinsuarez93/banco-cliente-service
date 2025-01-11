@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ec.com.banco.cliente.domain.common.exception.EntidadNoEncontradaException;
-import ec.com.banco.cliente.domain.producto.Producto;
+import ec.com.banco.cliente.domain.ejemplo.producto.Producto;
 import ec.com.banco.cliente.infrastructure.common.jms.Servicio;
 import jakarta.jms.JMSException;
 import jakarta.jms.TextMessage;

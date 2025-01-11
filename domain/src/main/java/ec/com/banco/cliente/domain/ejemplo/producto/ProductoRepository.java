@@ -1,4 +1,4 @@
-package ec.com.banco.cliente.domain.producto;
+package ec.com.banco.cliente.domain.ejemplo.producto;
 
 import java.util.List;
 

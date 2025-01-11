@@ -1,4 +1,4 @@
-package ec.com.banco.cliente.domain.producto;
+package ec.com.banco.cliente.domain.ejemplo.producto;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import ec.com.centric.commons.rest.CriterioBusqueda;
 import ec.com.centric.commons.rest.PagerAndSortDto;
 import ec.com.centric.commons.rest.Pagina;
 import ec.com.banco.cliente.domain.common.exception.EntidadNoEncontradaException;
-import ec.com.banco.cliente.share.producto.ProductoDto;
+import ec.com.banco.cliente.share.ejemplo.dto.ProductoDto;
 
 public interface ProductoService {
 

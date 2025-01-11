@@ -2,11 +2,11 @@ package ec.com.banco.cliente.infrastructure.ejemplo.mappers;
 
 import org.mapstruct.Mapper;
 
-import ec.com.banco.cliente.domain.producto.Categoria;
-import ec.com.banco.cliente.domain.producto.Producto;
+import ec.com.banco.cliente.domain.ejemplo.producto.Categoria;
+import ec.com.banco.cliente.domain.ejemplo.producto.Producto;
 import ec.com.banco.cliente.infrastructure.ejemplo.entities.CategoriaEntity;
 import ec.com.banco.cliente.infrastructure.ejemplo.entities.ProductoEntity;
-import ec.com.banco.cliente.share.producto.ProductoDto;
+import ec.com.banco.cliente.share.ejemplo.dto.ProductoDto;
 
 @Mapper(componentModel = "spring")
 public interface ProductoMapper {

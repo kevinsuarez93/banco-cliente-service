@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ec.com.banco.cliente.domain.common.exception.ServiceException;
-import ec.com.banco.cliente.domain.integracion.IntegracionProducto;
-import ec.com.banco.cliente.share.Operacion;
-import ec.com.banco.cliente.share.producto.ProductoDto;
+import ec.com.banco.cliente.domain.ejemplo.integracion.IntegracionProducto;
+import ec.com.banco.cliente.share.ejemplo.enums.Operacion;
+import ec.com.banco.cliente.share.ejemplo.dto.ProductoDto;
 import jakarta.jms.JMSException;
 
 @Service

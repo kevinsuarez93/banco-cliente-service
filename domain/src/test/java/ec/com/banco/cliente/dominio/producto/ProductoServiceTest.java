@@ -10,9 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ec.com.banco.cliente.domain.producto.Producto;
-import ec.com.banco.cliente.domain.producto.ProductoRepository;
-import ec.com.banco.cliente.domain.producto.ProductoServiceImpl;
+import ec.com.banco.cliente.domain.ejemplo.producto.Producto;
+import ec.com.banco.cliente.domain.ejemplo.producto.ProductoRepository;
+import ec.com.banco.cliente.domain.ejemplo.producto.ProductoServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductoServiceTest {

@@ -1,17 +1,15 @@
-package ec.com.banco.cliente.share.producto;
+package ec.com.banco.cliente.domain.ejemplo.producto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class CategoriaDto {
+public class Categoria {
 	
 	private Long id;
 	

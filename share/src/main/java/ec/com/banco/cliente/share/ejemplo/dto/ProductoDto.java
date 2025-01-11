@@ -1,4 +1,4 @@
-package ec.com.banco.cliente.share.producto;
+package ec.com.banco.cliente.share.ejemplo.dto;
 
 import java.math.BigDecimal;
 
