@@ -1,0 +1,6 @@
+rootProject.name = 'spring-modular-hexagonal-architecture'
+
+include 'share'
+include 'domain'
+include 'infrastructure'
+include 'bootstrap'
