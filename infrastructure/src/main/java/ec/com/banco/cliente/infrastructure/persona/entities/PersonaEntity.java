@@ -49,7 +49,4 @@ public class PersonaEntity implements Serializable {
     @Size(max = 20)
     private String telefono;
 
-    // Relaciones
-    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
-    private ClienteEntity cliente;
 }

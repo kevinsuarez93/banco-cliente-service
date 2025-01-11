@@ -24,9 +24,8 @@ public class ClienteDto {
     @Size(max = 100, groups = { Default.class, Crear.class, Actualizar.class })
     private String password;
 
-    @NotBlank(groups = { Default.class, Crear.class })
-    @Size(max = 20, groups = { Default.class, Crear.class, Actualizar.class })
-    private String estado;
+    @NotNull(groups = { Default.class, Crear.class })
+    private Boolean estado;
 
 
     // Interfaces para definir grupos

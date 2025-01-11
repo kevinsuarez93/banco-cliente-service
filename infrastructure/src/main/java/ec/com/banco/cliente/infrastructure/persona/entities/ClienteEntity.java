@@ -30,9 +30,10 @@ public class ClienteEntity implements Serializable {
 
     @NotNull
     @Size(max = 100)
+    @Column(nullable = false, length = 100)
     private String password;
 
     @NotNull
-    @Size(max = 20)
-    private String estado;
+    @Column(nullable = false)
+    private Boolean estado;
 }

@@ -14,5 +14,5 @@ public class Cliente {
 
     private String password;
 
-    private String estado;
+    private Boolean estado;
 }
