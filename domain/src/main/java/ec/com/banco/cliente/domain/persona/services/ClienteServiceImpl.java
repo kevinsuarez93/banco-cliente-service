@@ -38,4 +38,9 @@ public class ClienteServiceImpl implements ClienteService {
         }
         clienteRepository.eliminarCliente(clienteId);
     }
+
+    @Override
+    public Cliente buscarClientePorId(Long clienteId) {
+        return this.clienteRepository.obtenerCliente(clienteId);
+    }
 }

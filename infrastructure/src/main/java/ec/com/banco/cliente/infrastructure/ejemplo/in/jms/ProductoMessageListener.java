@@ -26,7 +26,7 @@ public class ProductoMessageListener {
 		this.propertiesService = propertiesService;
     }
 
-    @JmsListener(destination = "${jms.products.requestqueue}")
+    @JmsListener(destination = "${jms.clientes.requestqueue}")
     public void receiveMessage(final Message message, Session session) throws JMSException {
     	log.info("Mensaje recebido y procesando");
 		TextMessage textMessage = (TextMessage) message;

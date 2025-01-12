@@ -3,7 +3,7 @@ package ec.com.banco.cliente.infrastructure.ejemplo.in.jms.impl;
 import org.springframework.stereotype.Service;
 
 import ec.com.banco.cliente.infrastructure.common.jms.Servicio;
-import ec.com.banco.cliente.share.ejemplo.enums.Operacion;
+import ec.com.banco.cuenta.share.ejemplo.enums.Operacion;
 
 @Service
 public class ProductoServiceFactory {

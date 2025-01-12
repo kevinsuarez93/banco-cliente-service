@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import ec.com.banco.cliente.infrastructure.common.exceptions.RemoteExecutionException;
+import ec.com.banco.cliente.infrastructure.persona.out.jms.JmsCuentaProperties;
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
@@ -31,10 +32,12 @@ public class JmsClient {
 
 	private JmsTemplate jmsTemplate;
     private ProductoServiceFactory productServiceFactory;
+	private JmsCuentaProperties jmsCuentaProperties;
 
-    public JmsClient(JmsTemplate jmsTemplate, ProductoServiceFactory productServiceFactory) throws MalformedURLException, IOException, ParseException {
+    public JmsClient(JmsTemplate jmsTemplate, ProductoServiceFactory productServiceFactory, JmsCuentaProperties jmsCuentaProperties) throws MalformedURLException, IOException, ParseException {
         this.jmsTemplate = jmsTemplate;
 		this.productServiceFactory = productServiceFactory;
+		this.jmsCuentaProperties = jmsCuentaProperties;
     }
 
 	public <T, R> R sendAndWaitForResponse(T request, Class<R> responseClass, String requestQueue, String replyQueue, Optional<String> version, String operacion) 
@@ -58,7 +61,10 @@ public class JmsClient {
 				return message;
 			}
 		};
-		
+
+		jmsTemplate.isExplicitQosEnabled();
+		jmsTemplate.setTimeToLive(jmsCuentaProperties.getTimeout());
+
 		jmsTemplate.send(requestQueue, messageCreator);
 		log.info("Esperando respuesta");
 		
@@ -67,20 +73,25 @@ public class JmsClient {
 		log.info("Recibiendo respuesta: " + correllationId);
 		
 		Message reply = jmsTemplate.receiveSelected(replyQueue, "JMSCorrelationID='" + correllationId + "'");
-		
+
 		if (reply != null && reply.getBooleanProperty("SUCCESS")) {
+			if (responseClass == String.class) {
+				return responseClass.cast(reply.getBody(String.class));
+			}
 			String stringResponse = reply.getBody(String.class);
 			if (stringResponse != null && !stringResponse.isEmpty()) {
-				return mapper.readValue(stringResponse, responseClass);				
+				return mapper.readValue(stringResponse, responseClass);
 			}
 			return null;
 		}
 
-		String message = reply.getBody(String.class);
+		String message = reply == null ? "{\"message\": \"No se pudo completar la operación.\"}"
+				: reply.getBody(String.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		ErrorResponse errorResponse = objectMapper.readValue(message, ErrorResponse.class);
 		throw new RemoteExecutionException(errorResponse.getStatus(), errorResponse.getMessage());
-			
+
+
 	}
 
     public void executeAndResponse(final Message message, Session session, String replyQueue) throws JMSException, JsonProcessingException {
@@ -92,10 +103,9 @@ public class JmsClient {
             TextMessage textMessage = (TextMessage) message;
 			ThreadContext.put("correlationId", textMessage.getJMSCorrelationID());
 			log.info("Mensaje recibido");
-            String jwtToken = textMessage.getStringProperty("jwt");
             try {
-            	Servicio function = productServiceFactory.getInstance(operacion);
-            	jsonResponse = function.execute(textMessage);
+            	Servicio operation = productServiceFactory.getInstance(operacion);
+            	jsonResponse = operation.execute(textMessage);
             	success = true;
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -35,6 +35,12 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>ec.com.centric</groupId>
+			<artifactId>banco-cuenta-service-share</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>	
 
 </project>

@@ -9,4 +9,6 @@ public interface ClienteService {
     void actualizarCliente(Cliente cliente) throws EntidadNoEncontradaException;
 
     void eliminarCliente(Long clienteId) throws EntidadNoEncontradaException;
+
+    Cliente buscarClientePorId(Long clienteId);
 }
