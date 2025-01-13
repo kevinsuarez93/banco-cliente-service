@@ -32,7 +32,7 @@ INSERT INTO public.products ("name",stock,price,pvp,has_discount,category_id) VA
 
 ```
 
-# Construir y levantar el proyecto:
+# Construir y levantar el proyecto localmente:
 ```cmd
 mvn clean install
 mvn spring-boot:run -pl bootstrap
@@ -42,4 +42,8 @@ mvn spring-boot:run -pl bootstrap
 ```
 curl http://localhost:8080/products/1
 ```
-
+# Desplegar en docker
+```cmd
+docker build . -f deploy/Dockerfile -t banco-cliente-service
+docker run -d -p 8081:8081 banco-cliente-service
+```

@@ -1,0 +1,36 @@
+version: '3.8'
+
+volumes:
+  postgres_data:
+
+networks:
+  internal_network:
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Uso correcto del volumen
+    environment:
+      POSTGRES_DB: banco
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    networks:
+      - internal_network  # Añadido a la red interna
+
+  activemq:
+    image: apache/activemq-artemis:latest-alpine
+    container_name: activemq-broker
+    restart: always
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: admin
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    networks:
+      - internal_network  # Añadido a la red interna

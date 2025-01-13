@@ -1,0 +1,35 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+
+    <mirrors>
+         <mirror>
+            <id>maven-central</id>
+            <mirrorOf>external:http:*</mirrorOf>
+            <url>http://192.168.150.179:8889/repository/maven-central/</url>
+            <blocked>false</blocked>
+        </mirror> 
+        <mirror>
+            <id>maven-public</id>
+            <mirrorOf>external:http:*</mirrorOf>
+            <url>http://192.168.150.179:8889/repository/maven-public/</url>
+            <blocked>false</blocked>
+        </mirror> 
+        <mirror>
+            <id>maven-releases</id>
+            <mirrorOf>external:http:*</mirrorOf>
+            <url>http://192.168.150.179:8889/repository/maven-releases/</url>
+            <blocked>false</blocked>
+        </mirror>
+        <!--<mirror>
+            <id>maven-snapshots</id>
+            <mirrorOf>external:http:*</mirrorOf>
+            <url>https://nexus.centric.com.ec/repository/maven-snapshots/</url>
+            <blocked>false</blocked>
+        </mirror> -->
+    </mirrors>
+
+    
+</settings>
