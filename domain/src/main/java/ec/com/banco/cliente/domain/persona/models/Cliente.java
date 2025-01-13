@@ -9,9 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class Cliente {
+
     private Long clienteId;
 
-    private Long personaId;
+    private Persona persona;
 
     private String password;
 

@@ -5,8 +5,10 @@ import ec.com.banco.cliente.domain.persona.jms.IntegracionCuenta;
 import ec.com.banco.cliente.domain.persona.models.Cliente;
 import ec.com.banco.cliente.domain.persona.models.Reporte;
 import ec.com.banco.cuenta.share.cuenta.dto.CuentaDto;
+import ec.com.banco.cuenta.share.cuenta.dto.FiltroDto;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,13 +25,22 @@ public class ReporteServiceImpl implements ReporteService {
 
 
     @Override
-    public List<Reporte> generarReporte(Long clienteId) throws EntidadNoEncontradaException {
+    public Reporte generarReporte(Long clienteId, Date fechaInicio, Date fechaFinal) throws EntidadNoEncontradaException {
+
         Cliente cliente =this.clienteService.buscarClientePorId(clienteId);
         System.out.println(cliente.toString());
-        CuentaDto cuentas= this.integracionCuenta.obtenerCuenta(clienteId);
+        CuentaDto cuentas= this.integracionCuenta.obtenerCuenta(clienteId, fechaInicio, fechaFinal);
 
         System.out.println(cuentas.toString());
 
-        return null;
+        return  Reporte.builder()
+                .clienteId(clienteId)
+                .nombre(cliente.getPersona().getNombre())
+                .identificacion(cliente.getPersona().getIdentificacion())
+                .cuenta(cuentas)
+                .build();
+
+
+
     }
 }

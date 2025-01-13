@@ -1,5 +1,6 @@
 package ec.com.banco.cliente.domain.persona.models;
 
+import ec.com.banco.cuenta.share.cuenta.dto.CuentaDto;
 import lombok.*;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public class Reporte {
     private String nombre;
     private String identificacion;
     private Long clienteId;
+    private CuentaDto cuenta;
 }

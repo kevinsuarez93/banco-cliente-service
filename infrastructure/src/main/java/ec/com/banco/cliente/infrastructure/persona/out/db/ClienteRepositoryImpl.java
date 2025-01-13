@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import static ec.com.banco.cliente.infrastructure.persona.entities.QClienteEntity.clienteEntity;
+import static ec.com.banco.cliente.infrastructure.persona.entities.QPersonaEntity.personaEntity;
 @Repository
 @Transactional
 @Slf4j
@@ -54,6 +55,7 @@ public class ClienteRepositoryImpl extends JPABaseRepository<ClienteEntity, Long
     @Override
     public Cliente obtenerCliente(Long clienteId) {
         ClienteEntity entities = getQueryFactory().selectFrom(clienteEntity)
+                .leftJoin(personaEntity).on(personaEntity.personaId.eq(clienteEntity.persona.personaId))
                 .where(clienteEntity.clienteId.eq(clienteId)).fetchOne();
         return clienteMapper.entityToDomain(entities);
     }
