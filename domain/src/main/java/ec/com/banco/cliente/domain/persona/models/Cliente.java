@@ -12,9 +12,11 @@ public class Cliente {
 
     private Long clienteId;
 
-    private Persona persona;
+    private Long personaId;
 
     private String password;
 
     private Boolean estado;
+
+    private Persona persona;
 }

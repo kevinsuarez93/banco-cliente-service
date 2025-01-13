@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -78,7 +79,7 @@ public class ClienteController {
     @Operation(summary = "Eliminar compania")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Companias ha sido eliminada."),
             @ApiResponse(responseCode = "404", description = "Companias no existe.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
-    public ResponseEntity<Void> eliminarCliente(@NotBlank @PathVariable Long noCia)
+    public ResponseEntity<Void> eliminarCliente(@NotNull @PathVariable Long noCia)
             throws EntidadNoEncontradaException {
         clienteService.eliminarCliente(noCia);
         return new ResponseEntity<>(HttpStatus.OK);

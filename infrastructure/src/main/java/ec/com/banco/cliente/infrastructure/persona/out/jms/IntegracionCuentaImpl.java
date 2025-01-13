@@ -46,7 +46,6 @@ public class IntegracionCuentaImpl  implements IntegracionCuenta {
             filtroDto.setFechaFinal(fechaFinal);
             filtroDto.setClienteId(clienteId);
 
-            // 📌 Recibir la respuesta como `String`
             String jsonResponse = jmsClient.sendAndWaitForResponse(
                     filtroDto,
                     String.class,  // 📌 Recibimos JSON como String
@@ -56,11 +55,9 @@ public class IntegracionCuentaImpl  implements IntegracionCuenta {
                     Operacion.GET_CUENTA_POR_ID.name()
             );
 
-            // 📌 Convertir la respuesta JSON a `List<CuentaDto>`
             ObjectMapper objectMapper = new ObjectMapper();
             List<CuentaDto> cuentas = objectMapper.readValue(jsonResponse, new TypeReference<List<CuentaDto>>() {});
 
-            // 📌 Validar si la lista está vacía
             if (cuentas == null || cuentas.isEmpty()) {
                 throw new EntidadNoEncontradaException("No se encontraron cuentas para el cliente.");
             }

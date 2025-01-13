@@ -12,9 +12,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
-
+    @Mapping(target = "personaId", source = "entity.persona.personaId")
     Cliente entityToDomain(ClienteEntity entity);
 
+    @InheritInverseConfiguration
     ClienteEntity domainToEntity(Cliente domain);
 
 

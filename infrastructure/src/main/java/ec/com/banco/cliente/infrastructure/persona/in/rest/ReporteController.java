@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class ReporteController {
     @ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Reportes generado."),
             @ApiResponse(responseCode = "400", description = "Entrada inválida.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
             })
-    public ResponseEntity<ReporteDto> generarReporte(@RequestBody FiltroDto filtro)
+    public ResponseEntity<ReporteDto> generarReporte(@Valid @RequestBody FiltroDto filtro)
             throws RegistroDuplicadoException, EntidadNoEncontradaException {
         return new ResponseEntity<>(
                 this.reporteMapper.domainToDto(reporteService.generarReporte(filtro.getClienteId(), filtro.getFechaInicio(), filtro.getFechaFinal())),
