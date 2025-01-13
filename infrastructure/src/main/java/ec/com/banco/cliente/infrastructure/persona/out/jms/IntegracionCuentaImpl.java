@@ -2,6 +2,8 @@ package ec.com.banco.cliente.infrastructure.persona.out.jms;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ec.com.banco.cliente.domain.common.exception.EntidadNoEncontradaException;
 import ec.com.banco.cliente.domain.persona.jms.IntegracionCuenta;
 import ec.com.banco.cliente.infrastructure.common.exceptions.RemoteExecutionException;
@@ -15,6 +17,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -36,14 +39,35 @@ public class IntegracionCuentaImpl  implements IntegracionCuenta {
 
 
     @Override
-    public CuentaDto obtenerCuenta(Long clienteId, Date fechaInicio, Date fechaFinal) throws EntidadNoEncontradaException {
+    public List<CuentaDto> obtenerCuentas(Long clienteId, Date fechaInicio, Date fechaFinal) throws EntidadNoEncontradaException {
         try {
-            FiltroDto filtroDto = FiltroDto.builder().clienteId(clienteId).fechaInicio(fechaInicio).fechaFinal(fechaFinal).build();
-            return jmsClient.sendAndWaitForResponse(filtroDto, CuentaDto.class,
-                    jmsCuentaProperties.getRequestqueue(), jmsCuentaProperties.getReplyqueue(),
-                    Optional.empty(), Operacion.GET_CUENTA_POR_ID.name());
+            FiltroDto filtroDto = new FiltroDto();
+            filtroDto.setFechaInicio(fechaInicio);
+            filtroDto.setFechaFinal(fechaFinal);
+            filtroDto.setClienteId(clienteId);
+
+            // 📌 Recibir la respuesta como `String`
+            String jsonResponse = jmsClient.sendAndWaitForResponse(
+                    filtroDto,
+                    String.class,  // 📌 Recibimos JSON como String
+                    jmsCuentaProperties.getRequestqueue(),
+                    jmsCuentaProperties.getReplyqueue(),
+                    Optional.empty(),
+                    Operacion.GET_CUENTA_POR_ID.name()
+            );
+
+            // 📌 Convertir la respuesta JSON a `List<CuentaDto>`
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<CuentaDto> cuentas = objectMapper.readValue(jsonResponse, new TypeReference<List<CuentaDto>>() {});
+
+            // 📌 Validar si la lista está vacía
+            if (cuentas == null || cuentas.isEmpty()) {
+                throw new EntidadNoEncontradaException("No se encontraron cuentas para el cliente.");
+            }
+
+            return cuentas;
         } catch (JsonProcessingException | RemoteExecutionException | JMSException e) {
-            throw new EntidadNoEncontradaException(e.getMessage());
+            throw new EntidadNoEncontradaException("Error al obtener cuentas: " + e.getMessage());
         }
     }
 }

@@ -5,7 +5,6 @@ import ec.com.banco.cliente.domain.persona.jms.IntegracionCuenta;
 import ec.com.banco.cliente.domain.persona.models.Cliente;
 import ec.com.banco.cliente.domain.persona.models.Reporte;
 import ec.com.banco.cuenta.share.cuenta.dto.CuentaDto;
-import ec.com.banco.cuenta.share.cuenta.dto.FiltroDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -29,7 +28,7 @@ public class ReporteServiceImpl implements ReporteService {
 
         Cliente cliente =this.clienteService.buscarClientePorId(clienteId);
         System.out.println(cliente.toString());
-        CuentaDto cuentas= this.integracionCuenta.obtenerCuenta(clienteId, fechaInicio, fechaFinal);
+        List<CuentaDto> cuentas= this.integracionCuenta.obtenerCuentas(clienteId, fechaInicio, fechaFinal);
 
         System.out.println(cuentas.toString());
 
@@ -37,7 +36,7 @@ public class ReporteServiceImpl implements ReporteService {
                 .clienteId(clienteId)
                 .nombre(cliente.getPersona().getNombre())
                 .identificacion(cliente.getPersona().getIdentificacion())
-                .cuenta(cuentas)
+                .cuentas(cuentas)
                 .build();
 
 

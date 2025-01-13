@@ -16,5 +16,5 @@ public class Reporte {
     private String nombre;
     private String identificacion;
     private Long clienteId;
-    private CuentaDto cuenta;
+    private List<CuentaDto> cuentas;
 }
