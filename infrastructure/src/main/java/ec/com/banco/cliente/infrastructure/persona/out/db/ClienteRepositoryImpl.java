@@ -43,7 +43,7 @@ public class ClienteRepositoryImpl extends JPABaseRepository<ClienteEntity, Long
     public void actualizarCliente(Cliente cliente) throws EntidadNoEncontradaException {
         if (obtenerCliente(cliente.getClienteId()) == null) {
             throw new EntidadNoEncontradaException(
-                    String.format("No existe compania con del codigo %s ", cliente.getClienteId()));
+                    String.format("No existe cliente con el codigo %s ", cliente.getClienteId()));
         }
 
         ClienteEntity entity = getQueryFactory().selectFrom(clienteEntity)

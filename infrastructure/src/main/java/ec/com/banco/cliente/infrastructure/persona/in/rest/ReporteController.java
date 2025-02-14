@@ -36,10 +36,10 @@ public class ReporteController {
 
 
     /**
-     * Crear nueva Companias.
+     * Servicio para obtener reporte de movimiento por cliente
      *
-     * @param crearDto Dto de crear compania
-     * @return CompaniasCrearDto
+     * @param filtro Dto de crear compania
+     * @return ReporteDto
      */
 
 
