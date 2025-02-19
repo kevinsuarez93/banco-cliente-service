@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ec.com.banco.cliente.infrastructure.ejemplo.in.jms.impl.ProductoServiceFactory;
 import ec.com.banco.cliente.infrastructure.common.exceptions.ErrorResponse;
 
 import jakarta.jms.JMSException;

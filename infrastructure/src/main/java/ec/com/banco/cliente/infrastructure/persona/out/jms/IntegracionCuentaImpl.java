@@ -27,8 +27,8 @@ public class IntegracionCuentaImpl  implements IntegracionCuenta {
 
 
 
-    private JmsClient jmsClient;
-    private JmsCuentaProperties jmsCuentaProperties;
+    private final JmsClient jmsClient;
+    private final JmsCuentaProperties jmsCuentaProperties;
 
     public IntegracionCuentaImpl(JmsClient jmsClient, JmsCuentaProperties jmsCuentaProperties) {
         this.jmsClient = jmsClient;

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
-    private ClienteRepository clienteRepository;
-    private MessageSource messageSource;
+    private final ClienteRepository clienteRepository;
+    private final MessageSource messageSource;
 
     public ClienteServiceImpl(ClienteRepository clienteRepository, MessageSource messageSource) {
         this.clienteRepository = clienteRepository;

@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class ReporteServiceImpl implements ReporteService {
 
-    private IntegracionCuenta integracionCuenta;
-    private ClienteService clienteService;
+    private final IntegracionCuenta integracionCuenta;
+    private final ClienteService clienteService;
 
     public ReporteServiceImpl(ClienteService clienteService, IntegracionCuenta integracionCuenta) {
         this.integracionCuenta = integracionCuenta;
