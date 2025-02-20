@@ -10,7 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.ArgumentMatchers.any;
+import org.springframework.context.MessageSource;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +20,9 @@ public class ClienteServiceTest {
 
     @Mock
     public ClienteRepository clienteRepository;
+
+    @Mock
+    private MessageSource messageSource;
 
     @InjectMocks
     public ClienteServiceImpl clienteService;
@@ -32,33 +36,50 @@ public class ClienteServiceTest {
     }
 
     @Test
-    public void shouldSaveCliente() throws EntidadNoEncontradaException {
-        clienteService.actualizarCliente(cliente);
-        verify(clienteRepository, times(1)).actualizarCliente(any(Cliente.class));
-    }
-
-    @Test
-    public void shouldCreateCliente() {
+    void shouldCreateCliente() {
         clienteService.crearCliente(cliente);
-        verify(clienteRepository, times(1)).crearCliente(any(Cliente.class));
+
+        verify(clienteRepository, times(1)).crearCliente(cliente);
     }
 
     @Test
-    public void shouldDeleteClienteWhenExists() throws EntidadNoEncontradaException {
-        when(clienteRepository.obtenerCliente(1L)).thenReturn(cliente);
+    void shouldUpdateCliente() throws EntidadNoEncontradaException {
+        clienteService.actualizarCliente(cliente);
 
-        clienteService.eliminarCliente(1L);
-
-        verify(clienteRepository, times(1)).eliminarCliente(1L);
+        verify(clienteRepository, times(1)).actualizarCliente(cliente);
     }
 
     @Test
-    public void shouldReturnNullWhenClienteNotFound() {
-        when(clienteRepository.obtenerCliente(3L)).thenReturn(null);
+    void shouldDeleteClienteIfExists() throws EntidadNoEncontradaException {
+        Long clienteId = 1L;
+        when(clienteRepository.obtenerCliente(clienteId)).thenReturn(cliente);
 
-        Cliente found = clienteService.buscarClientePorId(3L);
+        clienteService.eliminarCliente(clienteId);
+
+        verify(clienteRepository, times(1)).eliminarCliente(clienteId);
+    }
+
+
+    @Test
+    void shouldReturnClienteIfExists() {
+        Long clienteId = 3L;
+        when(clienteRepository.obtenerCliente(clienteId)).thenReturn(cliente);
+
+        Cliente found = clienteService.buscarClientePorId(clienteId);
+
+        assertNotNull(found);
+        assertEquals(cliente, found);
+        verify(clienteRepository, times(1)).obtenerCliente(clienteId);
+    }
+
+    @Test
+    void shouldReturnNullIfClienteDoesNotExist() {
+        Long clienteId = 4L;
+        when(clienteRepository.obtenerCliente(clienteId)).thenReturn(null);
+
+        Cliente found = clienteService.buscarClientePorId(clienteId);
 
         assertNull(found);
-        verify(clienteRepository, times(1)).obtenerCliente(3L);
+        verify(clienteRepository, times(1)).obtenerCliente(clienteId);
     }
 }
