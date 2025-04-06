@@ -28,6 +28,9 @@ public class ClienteDto {
     private Boolean estado;
 
 
+    private PersonaDto persona;
+
+
     // Interfaces para definir grupos
     public interface Crear {
     }

@@ -3,6 +3,8 @@ package ec.com.banco.cliente.domain.persona.repositories;
 import ec.com.banco.cliente.domain.common.exception.EntidadNoEncontradaException;
 import ec.com.banco.cliente.domain.persona.models.Cliente;
 
+import java.util.List;
+
 public interface ClienteRepository {
 
     void crearCliente(Cliente cliente);
@@ -12,4 +14,7 @@ public interface ClienteRepository {
     Cliente obtenerCliente(Long clienteId);
 
     void eliminarCliente(Long clienteId) throws EntidadNoEncontradaException;
+
+
+    List<Cliente> obtenerListadoClientes();
 }

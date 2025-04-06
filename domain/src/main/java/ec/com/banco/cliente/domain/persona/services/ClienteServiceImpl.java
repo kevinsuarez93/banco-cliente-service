@@ -8,6 +8,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
@@ -43,4 +45,10 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente buscarClientePorId(Long clienteId) {
         return this.clienteRepository.obtenerCliente(clienteId);
     }
+
+    @Override
+    public List<Cliente> obtenerListadoClientes() {
+        return this.clienteRepository.obtenerListadoClientes();
+    }
+
 }

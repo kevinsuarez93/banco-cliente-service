@@ -13,11 +13,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
@@ -67,6 +71,39 @@ public class ClienteController {
             throws EntidadNoEncontradaException {
         this.clienteService.actualizarCliente(this.clienteMapper.dtoToDomain(actualizarDto));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    /**
+     * Buscar todas las companias.
+     *
+     * @return Lista de CompaniasDto
+     * @author ksuarez on 2024/04/17.
+     */
+    @GetMapping()
+    @Operation(summary = "Obtener todas las clientes")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "clientes encontradas."),
+            @ApiResponse(responseCode = "404", description = "Compania no existe.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
+    public ResponseEntity<List<ClienteDto>> obtenerListadoClientes() {
+        return new ResponseEntity<>(
+                this.clienteMapper.domainsToDtos(clienteService.obtenerListadoClientes()), HttpStatus.OK);
+    }
+
+    /**
+     * Buscar compania por codigo.
+     *
+     * @param clienteId codigo de compania
+     * @return CompaniasDto
+     * @author ksuarez on 2024/04/17.
+     */
+    @GetMapping(value = "/{clienteId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Obtener clientes por id")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "clientes encontrada."),
+            @ApiResponse(responseCode = "404", description = "Compania no encontrada.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
+    public ResponseEntity<ClienteDto> obtenerCliente(@NotNull @PathVariable Long clienteId)
+            throws EntidadNoEncontradaException {
+        return new ResponseEntity<>(this.clienteMapper.domainToDto(clienteService.buscarClientePorId(clienteId)),
+                HttpStatus.OK);
     }
 
     /**

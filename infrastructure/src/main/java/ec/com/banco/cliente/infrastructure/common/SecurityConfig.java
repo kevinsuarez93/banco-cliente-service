@@ -4,6 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
@@ -24,6 +28,17 @@ public class SecurityConfig {
 
         ;
 
+        // Configure CORS
+        http.cors(cors -> {
+            CorsConfigurationSource source = request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+                config.setAllowedHeaders(Arrays.asList("*"));
+                return config;
+            };
+            cors.configurationSource(source);
+        });
         return http.build();
     }
 }

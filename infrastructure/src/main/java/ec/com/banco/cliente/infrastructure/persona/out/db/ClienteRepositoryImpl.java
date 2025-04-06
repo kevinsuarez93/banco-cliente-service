@@ -1,7 +1,10 @@
 package ec.com.banco.cliente.infrastructure.persona.out.db;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPQLQuery;
 import ec.com.banco.cliente.domain.common.exception.EntidadNoEncontradaException;
 import ec.com.banco.cliente.domain.persona.models.Cliente;
+import ec.com.banco.cliente.domain.persona.models.Persona;
 import ec.com.banco.cliente.domain.persona.repositories.ClienteRepository;
 import ec.com.banco.cliente.infrastructure.common.repositories.JPABaseRepository;
 import ec.com.banco.cliente.infrastructure.persona.entities.ClienteEntity;
@@ -12,6 +15,9 @@ import jakarta.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 import static ec.com.banco.cliente.infrastructure.persona.entities.QClienteEntity.clienteEntity;
 import static ec.com.banco.cliente.infrastructure.persona.entities.QPersonaEntity.personaEntity;
 @Repository
@@ -69,5 +75,20 @@ public class ClienteRepositoryImpl extends JPABaseRepository<ClienteEntity, Long
             log.error(NO_EXISTEN_REGISTROS, e.getMessage());
             throw new EntidadNoEncontradaException(e.getMessage());
         }
+    }
+
+
+    @Override
+    public List<Cliente> obtenerListadoClientes() {
+
+        JPQLQuery<Cliente> jpqlQuery = getQueryFactory().selectFrom(clienteEntity)
+                .select(Projections.bean(Cliente.class, clienteEntity.clienteId, clienteEntity.password,
+                        clienteEntity.estado, personaEntity.personaId,
+                        Projections.bean(Persona.class, personaEntity.personaId, personaEntity.nombre)
+                                .as("persona")))
+                .leftJoin(personaEntity).on(personaEntity.personaId.eq(clienteEntity.persona.personaId));
+
+        List<Cliente> cliente = jpqlQuery.fetch();
+        return cliente;
     }
 }
